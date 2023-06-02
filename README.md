@@ -8,3 +8,5 @@ To compile it from the source, download the fl from https://ia903101.us.archive.
 3: run it using flashplayer
 
 A little change is made in the decompiled source code to let it pass recompilation. The functionality is not throughly tested and does not guarentee to work as expected.
+
+![screenshot](/master/screenshot.png?raw=true "screenshot")
