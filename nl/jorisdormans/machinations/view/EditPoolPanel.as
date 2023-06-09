@@ -17,6 +17,8 @@ package nl.jorisdormans.machinations.view
       private var max:PhantomEditNumberBox;
       
       private var tokenLimit:PhantomEditNumberBox;
+
+      private var rewardNumber: PhantomEditNumberBox;
       
       public function EditPoolPanel(param1:MachinationsEditView, param2:DisplayObjectContainer, param3:Stage, param4:Number, param5:Number, param6:Number, param7:Number, param8:Boolean = true, param9:Boolean = true)
       {
@@ -39,6 +41,14 @@ package nl.jorisdormans.machinations.view
          this.tokenLimit.max = 25;
          this.tokenLimit.onChange = this.changeValue;
          controlY += 28;
+
+         //try to add another
+         new PhantomLabel("Reward Num.",this,labelX,controlY);
+         this.rewardNumber = new PhantomEditNumberBox(0,0,5,this,controlX,controlY,controlNW);
+         this.tokenLimit.min = -1;
+         this.tokenLimit.max = 25;
+         this.rewardNumber.onChange = this.changeValue;
+         controlY += 28;
       }
       
       override public function get element() : GraphElement
@@ -54,6 +64,7 @@ package nl.jorisdormans.machinations.view
             this.number.value = (param1 as Pool).startingResources;
             this.max.value = (param1 as Pool).capacity;
             this.tokenLimit.value = (param1 as Pool).displayCapacity;
+            this.rewardNumber.value = (param1 as Pool).rewardNumber;
          }
       }
       
@@ -70,6 +81,9 @@ package nl.jorisdormans.machinations.view
          else if(param1 == this.tokenLimit)
          {
             view.setValue("displayCapacity",null,this.tokenLimit.value);
+         }
+         else if(param1 == this.rewardNumber){
+            view.setValue("rewardNumber", null, this.rewardNumber.value);
          }
          else
          {

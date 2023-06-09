@@ -23,6 +23,8 @@ package nl.jorisdormans.machinations.model
       private var shortage:int;
       
       public var displayCapacity:int = 25;
+
+      public var rewardNumber:int = 1;
       
       public function Pool()
       {
@@ -42,6 +44,7 @@ package nl.jorisdormans.machinations.model
          {
             _loc1_.@displayCapacity = this.displayCapacity;
          }
+         _loc1_.@rewardNumber = this.rewardNumber;
          return _loc1_;
       }
       
@@ -64,6 +67,9 @@ package nl.jorisdormans.machinations.model
          if(param1.@displayCapacity.length() > 0)
          {
             this.displayCapacity = parseInt(param1.@displayCapacity);
+         }
+         if(param1.@rewardNumber.length() > 0){
+            this.rewardNumber = parseInt(param1.@rewardNumber);
          }
       }
       

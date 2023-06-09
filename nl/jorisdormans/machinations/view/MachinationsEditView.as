@@ -1467,6 +1467,12 @@ package nl.jorisdormans.machinations.view
                         (_elements[_loc5_].element as Pool).displayCapacity = param3;
                      }
                      break;
+                  case "rewardNumber":
+                     if(_elements[_loc5_].element is Pool)
+                     {
+                        (_elements[_loc5_].element as Pool).rewardNumber = param3;
+                     }
+                     break;
                   case "gateType":
                      if(_elements[_loc5_].element is Gate)
                      {

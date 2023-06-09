@@ -159,10 +159,10 @@ package nl.jorisdormans.machinations.view
       
       public static function drawPoolGlyph(param1:Graphics, param2:Number, param3:Number, param4:Number, param5:uint) : void
       {
-         drawPool(param1,param2,param3,2,param5,16777215,param4 / 40 * 20,MachinationsNode.MODE_PASSIVE,MachinationsNode.PULL_MODE_PULL_ANY,0);
+         drawPool(param1,param2,param3,2,param5,16777215,param4 / 40 * 20,MachinationsNode.MODE_PASSIVE,MachinationsNode.PULL_MODE_PULL_ANY,0, -1);
       }
       
-      public static function drawPool(param1:Graphics, param2:Number, param3:Number, param4:Number, param5:uint, param6:uint, param7:Number, param8:String, param9:String, param10:int) : void
+      public static function drawPool(param1:Graphics, param2:Number, param3:Number, param4:Number, param5:uint, param6:uint, param7:Number, param8:String, param9:String, param10:int, param11:int=-1) : void
       {
          param1.lineStyle(param4,param5);
          param1.beginFill(param6);
@@ -196,6 +196,10 @@ package nl.jorisdormans.machinations.view
          {
             PhantomFont.drawText("&",param1,param2 + param7 * 1.1 + 4,param3 + param7 * 0.8 + 3,10,PhantomFont.ALIGN_CENTER);
          }
+         if(param11 > 0){
+            PhantomFont.drawText(param11 + "",param1,param2 + param7 * 1.1 + 14,param3 + param7 * 0.8 + 3,20,PhantomFont.ALIGN_CENTER);
+         }
+
          param1.lineStyle();
       }
       
@@ -230,6 +234,7 @@ package nl.jorisdormans.machinations.view
          {
             PhantomFont.drawTextToSVG("&",param1,param2 + param7 * 1.1 + 4,param3 + param7 * 0.8 + 3,10,PhantomFont.ALIGN_CENTER,StringUtil.toColorStringSVG(param6),StringUtil.toColorStringSVG(param5),param4);
          }
+
       }
       
       public static function drawGateGlyph(param1:Graphics, param2:Number, param3:Number, param4:Number, param5:uint) : void

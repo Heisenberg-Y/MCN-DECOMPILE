@@ -199,7 +199,7 @@ package nl.jorisdormans.machinations.view
                }
                else if(_loc3_ is Pool)
                {
-                  MachinationsDraw.drawPool(this.graphics,0,0,_loc5_ + SELECTED_THICKNESS,_loc6_,16777215,_loc3_.size,_loc3_.activationMode,_loc3_.pullMode,_loc3_.resourceInputCount);
+                  MachinationsDraw.drawPool(this.graphics,0,0,_loc5_ + SELECTED_THICKNESS,_loc6_,16777215,_loc3_.size,_loc3_.activationMode,_loc3_.pullMode,_loc3_.resourceInputCount, (_loc3_ as Pool).rewardNumber);
                }
                else if(_loc3_ is Delay)
                {
@@ -257,7 +257,7 @@ package nl.jorisdormans.machinations.view
             }
             else if(_loc3_ is Pool)
             {
-               MachinationsDraw.drawPool(this.graphics,0,0,_loc5_,_loc7_,16777215,_loc3_.size,_loc3_.activationMode,_loc3_.pullMode,_loc3_.resourceInputCount);
+               MachinationsDraw.drawPool(this.graphics,0,0,_loc5_,_loc7_,16777215,_loc3_.size,_loc3_.activationMode,_loc3_.pullMode,_loc3_.resourceInputCount,  (_loc3_ as Pool).rewardNumber);
             }
             else if(_loc3_ is Delay)
             {
