@@ -1,8 +1,10 @@
 package nl.jorisdormans.machinations.model
 {
    import nl.jorisdormans.graph.GraphEvent;
-   
-   public class Pool extends Source
+import nl.jorisdormans.utils.CSVItem;
+import nl.jorisdormans.utils.SimpleDebugger;
+
+public class Pool extends Source
    {
       
       public static const TOKEN_LIMIT:int = 25;
@@ -71,6 +73,28 @@ package nl.jorisdormans.machinations.model
          if(param1.@rewardNumber.length() > 0){
             this.rewardNumber = parseInt(param1.@rewardNumber);
          }
+      }
+
+      override public function tryReadCSVItem(csvItem: CSVItem): Boolean{
+         SimpleDebugger.debug.write("to match pool!" + csvItem.getCaption() + "; what is mine:" + this.caption);
+         if(super.tryReadCSVItem(csvItem)){
+            SimpleDebugger.debug.write("matched caption " + csvItem.getCaption() + "; what is mine:" + this.caption);
+            switch (csvItem.getAttribute()){
+               case CSVItem.CAPACITY:
+                    this.capacity = parseInt(csvItem.getValue());
+                   SimpleDebugger.debug.write("matched attribute " + csvItem.getCaption() + "; what is mine:" + this.caption);
+                    break;
+               case CSVItem.DISPLAY_CAP:
+                    this.displayCapacity = parseInt(csvItem.getValue());
+                    break;
+               case CSVItem.NUMBER:
+                    this._startingResources = parseInt(csvItem.getValue());
+                    break;
+
+            }
+            return true;
+         }
+         return false;
       }
       
       public function get startingResources() : int

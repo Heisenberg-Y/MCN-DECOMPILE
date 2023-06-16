@@ -18,10 +18,17 @@ package nl.jorisdormans.machinations.view
       private var min:PhantomEditNumberBox;
       
       private var max:PhantomEditNumberBox;
+
+      private var captionLabel: PhantomEditBox;
       
       public function EditConnectionPanel(param1:MachinationsEditView, param2:DisplayObjectContainer, param3:Number, param4:Number, param5:Number, param6:Number, param7:Boolean = true, param8:Boolean = true)
       {
          super(param1,param2,param3,param4,param5,param6,param7,param8);
+         new PhantomLabel("Caption",this,labelX,controlY);
+         this.captionLabel = new PhantomEditBox("Caption",this,controlX,controlY,controlW);
+         this.captionLabel.onChange = this.changeValue;
+         controlY += 28;
+
          new PhantomLabel("Label",this,labelX,controlY);
          this.label = new PhantomEditBox("Label",this,controlX,controlY,controlW);
          this.label.onChange = this.changeValue;
@@ -55,6 +62,7 @@ package nl.jorisdormans.machinations.view
             this.label.caption = (param1 as MachinationsConnection).label.getRealText();
             this.min.value = (param1 as MachinationsConnection).label.min;
             this.max.value = (param1 as MachinationsConnection).label.max;
+            this.captionLabel.caption = (param1 as MachinationsConnection).captionLabel;
          }
       }
       
@@ -71,6 +79,8 @@ package nl.jorisdormans.machinations.view
          else if(param1 == this.max)
          {
             view.setValue("max","",this.max.value);
+         } else if(param1 == this.captionLabel){
+            view.setValue("captionLabel", this.captionLabel.caption, 0);
          }
          else
          {

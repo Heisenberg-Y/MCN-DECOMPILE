@@ -1,8 +1,12 @@
 package nl.jorisdormans.machinations.model
 {
    import flash.geom.Vector3D;
-   import nl.jorisdormans.graph.GraphEvent;
-   import nl.jorisdormans.utils.MathUtil;
+
+import nl.jorisdormans.utils.CSVItem;
+
+import nl.jorisdormans.graph.GraphEvent;
+import nl.jorisdormans.utils.CSVItem;
+import nl.jorisdormans.utils.MathUtil;
    
    public class Register extends MachinationsNode
    {
@@ -394,6 +398,27 @@ package nl.jorisdormans.machinations.model
          this.startValue = param1.@start;
          this.valueStep = param1.@step;
          this.actions = 0;
+      }
+
+      override public function tryReadCSVItem(csvItem:CSVItem): Boolean{
+         if(super.tryReadCSVItem(csvItem)){
+            switch (csvItem.getAttribute()){
+               case CSVItem.MIN_VALUE:
+                    this.minValue = parseInt(csvItem.getValue());
+                    break;
+               case CSVItem.MAX_VALUE:
+                    this.maxValue = parseInt(csvItem.getValue());
+                    break;
+               case CSVItem.STARTING_VALUE:
+                    this.startValue = parseInt(csvItem.getValue());
+                    break;
+               case CSVItem.STEP:
+                    this.valueStep = parseInt(csvItem.getValue());
+                    break;
+            }
+            return true;
+         }
+         return false;
       }
    }
 }

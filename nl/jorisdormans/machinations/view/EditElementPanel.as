@@ -2,7 +2,8 @@ package nl.jorisdormans.machinations.view
 {
    import flash.display.DisplayObjectContainer;
    import nl.jorisdormans.graph.GraphElement;
-   import nl.jorisdormans.machinations.model.ArtificialPlayer;
+import nl.jorisdormans.graph.GraphEvent;
+import nl.jorisdormans.machinations.model.ArtificialPlayer;
    import nl.jorisdormans.machinations.model.Chart;
    import nl.jorisdormans.machinations.model.Converter;
    import nl.jorisdormans.machinations.model.Drain;
@@ -71,6 +72,7 @@ package nl.jorisdormans.machinations.view
             this.thickness.onChange = this.changeValue;
             this.controlY += 28;
          }
+
       }
       
       public function get element() : GraphElement

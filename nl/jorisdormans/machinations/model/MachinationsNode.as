@@ -6,7 +6,8 @@ package nl.jorisdormans.machinations.model
    import nl.jorisdormans.graph.GraphEvent;
    import nl.jorisdormans.graph.GraphNode;
    import nl.jorisdormans.phantomGraphics.PhantomFont;
-   import nl.jorisdormans.utils.MathUtil;
+import nl.jorisdormans.utils.CSVItem;
+import nl.jorisdormans.utils.MathUtil;
    import nl.jorisdormans.utils.StringUtil;
    
    public class MachinationsNode extends GraphNode
@@ -109,6 +110,51 @@ package nl.jorisdormans.machinations.model
             _loc1_.@actions = this.actions;
          }
          return _loc1_;
+      }
+
+      override public function tryReadCSVItem(csvItem:CSVItem): Boolean {
+         if(!super.tryReadCSVItem(csvItem)){
+            return false;
+         }
+         if( "*" + csvItem.getCaption() == this.caption){
+            switch (csvItem.getAttribute()){
+               case "size":
+                    this.size = Number(csvItem.getValue());
+                    break;
+               case CSVItem.THICKNESS:
+                    this.thickness = Number(csvItem.getValue());
+                    break;
+               case CSVItem.PULL_MODE:
+                    if(csvItem.getValue() == "pull any"){
+                       this.pullMode = PULL_MODE_PULL_ANY;
+                    } else if(csvItem.getValue() == "pull all"){
+                       this.pullMode = PULL_MODE_PULL_ALL;
+                    } else if(csvItem.getValue() == "push any"){
+                       this.pullMode = PULL_MODE_PUSH_ANY;
+                    } else if(csvItem.getValue() == "push all"){
+                       this.pullMode = PULL_MODE_PUSH_ALL;
+                    }
+                    break;
+               case CSVItem.ACTION_MODE:
+                    if(csvItem.getValue() == "Passive"){
+                       this.activationMode = MODE_PASSIVE;
+                    } else if(csvItem.getValue() == "Interactive"){
+                       this.activationMode = MODE_INTERACTIVE;
+                    } else if(csvItem.getValue() == "Automated"){
+                       this.activationMode = MODE_AUTOMATIC;
+                    } else if(csvItem.getValue() == "On Start"){
+                       this.activationMode = MODE_ONSTART;
+                    }
+                    break;
+               case CSVItem.ACTIONS:
+                    this.actions = Number(csvItem.getValue());
+                    break;
+            }
+            return true;
+         } else if (this is MachinationsConnection){
+
+         }
+         return false;
       }
       
       override public function readXML(param1:XML) : void

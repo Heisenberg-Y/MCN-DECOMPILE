@@ -1,7 +1,11 @@
 package nl.jorisdormans.graph
 {
    import flash.geom.Vector3D;
-   import nl.jorisdormans.utils.MathUtil;
+
+import nl.jorisdormans.machinations.model.MachinationsConnection;
+
+import nl.jorisdormans.utils.CSVItem;
+import nl.jorisdormans.utils.MathUtil;
    
    public class GraphConnection extends nl.jorisdormans.graph.GraphElement
    {
@@ -304,6 +308,13 @@ package nl.jorisdormans.graph
             _loc4_++;
          }
          return _loc1_;
+      }
+
+      override public function tryReadCSVItem(csvItem:CSVItem): Boolean{
+         if(this is MachinationsConnection){
+            return true;
+         }
+         return false;
       }
       
       override public function readXML(param1:XML) : void

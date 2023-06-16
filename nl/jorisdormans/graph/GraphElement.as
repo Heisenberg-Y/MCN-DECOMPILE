@@ -2,8 +2,11 @@ package nl.jorisdormans.graph
 {
    import flash.events.EventDispatcher;
    import flash.geom.Vector3D;
-   
-   public class GraphElement extends EventDispatcher
+
+import nl.jorisdormans.utils.CSVHelper;
+import nl.jorisdormans.utils.CSVItem;
+
+public class GraphElement extends EventDispatcher
    {
        
       
@@ -58,6 +61,10 @@ package nl.jorisdormans.graph
       
       public function readXML(param1:XML) : void
       {
+      }
+
+      public function tryReadCSVItem(csvItem: CSVItem): Boolean{
+         return true;
       }
       
       public function removeInput(param1:nl.jorisdormans.graph.GraphConnection) : void

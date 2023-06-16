@@ -47,6 +47,7 @@ package nl.jorisdormans.machinations.model
          super.readXML(param1);
          this.delayType = param1.@delayType;
       }
+
       
       override public function prepare(param1:Boolean) : void
       {

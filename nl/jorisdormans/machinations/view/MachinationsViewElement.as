@@ -29,7 +29,8 @@ package nl.jorisdormans.machinations.view
    import nl.jorisdormans.phantomGraphics.DrawUtil;
    import nl.jorisdormans.phantomGraphics.PhantomFont;
    import nl.jorisdormans.utils.MathUtil;
-   import nl.jorisdormans.utils.StringUtil;
+import nl.jorisdormans.utils.SimpleDebugger;
+import nl.jorisdormans.utils.StringUtil;
    
    public class MachinationsViewElement extends Sprite
    {

@@ -3,12 +3,14 @@ package nl.jorisdormans.machinations.view
    import flash.display.DisplayObjectContainer;
    import flash.display.Stage;
    import nl.jorisdormans.graph.GraphElement;
-   import nl.jorisdormans.machinations.model.Pool;
+import nl.jorisdormans.graph.GraphEvent;
+import nl.jorisdormans.machinations.model.Pool;
    import nl.jorisdormans.phantomGUI.PhantomControl;
    import nl.jorisdormans.phantomGUI.PhantomEditNumberBox;
    import nl.jorisdormans.phantomGUI.PhantomLabel;
-   
-   public class EditPoolPanel extends EditSourcePanel
+import nl.jorisdormans.utils.SimpleDebugger;
+
+public class EditPoolPanel extends EditSourcePanel
    {
        
       
@@ -23,6 +25,7 @@ package nl.jorisdormans.machinations.view
       public function EditPoolPanel(param1:MachinationsEditView, param2:DisplayObjectContainer, param3:Stage, param4:Number, param5:Number, param6:Number, param7:Number, param8:Boolean = true, param9:Boolean = true)
       {
          super(param1,param2,param3,param4,param5,param6,param7,param8,param9);
+
          new PhantomLabel("Number",this,labelX,controlY);
          this.number = new PhantomEditNumberBox(0,0,1,this,controlX,controlY,controlNW);
          this.number.min = 0;
@@ -49,6 +52,8 @@ package nl.jorisdormans.machinations.view
          this.tokenLimit.max = 25;
          this.rewardNumber.onChange = this.changeValue;
          controlY += 28;
+         SimpleDebugger.debug.write("call refresh....");
+
       }
       
       override public function get element() : GraphElement
@@ -89,6 +94,10 @@ package nl.jorisdormans.machinations.view
          {
             super.changeValue(param1);
          }
+      }
+
+      protected function refresh(){
+         SimpleDebugger.debug.write("call refresh....");
       }
    }
 }

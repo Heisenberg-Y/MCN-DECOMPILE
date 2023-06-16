@@ -37,7 +37,8 @@ package nl.jorisdormans.machinations.view
    import nl.jorisdormans.phantomGUI.PhantomTabButton;
    import nl.jorisdormans.phantomGUI.PhantomToolButton;
    import nl.jorisdormans.utils.FileIO;
-   import nl.jorisdormans.utils.StringUtil;
+import nl.jorisdormans.utils.SimpleDebugger;
+import nl.jorisdormans.utils.StringUtil;
    
    public class MachinationsEditView extends MachinationsView
    {
@@ -80,6 +81,8 @@ package nl.jorisdormans.machinations.view
       private var copyShift:int;
       
       private var addingConnection:Boolean = false;
+
+      private var fileIOData: FileIO;
       
       private var fileIOImport:FileIO;
       
@@ -124,9 +127,11 @@ package nl.jorisdormans.machinations.view
       public function MachinationsEditView(param1:DisplayObjectContainer, param2:Number, param3:Number, param4:Number, param5:Number)
       {
          super(param1,param2,param3 + topPanelHeight + 2,param4 - editPanelWidth - 2,param5);
+
          this.undoList = new Vector.<XML>();
          this.fileIOImport = new FileIO();
          this.fileIOSVG = new FileIO();
+         this.fileIOData = new FileIO();
       }
       
       override protected function createControls() : void
@@ -180,17 +185,19 @@ package nl.jorisdormans.machinations.view
          var _loc7_:Number = editPanelWidth - _loc5_ - 4;
          _loc6_ = 4;
          new PhantomButton("New (N)",this.newGraph,this.panelFile,_loc5_,_loc6_,_loc7_);
-         _loc6_ += 28;
+         _loc6_ += 24;
          new PhantomButton("Open (O)",this.openGraph,this.panelFile,_loc5_,_loc6_,_loc7_);
-         _loc6_ += 28;
+         _loc6_ += 24;
          new PhantomButton("Import (I)",this.importGraph,this.panelFile,_loc5_,_loc6_,_loc7_);
-         _loc6_ += 28;
+         _loc6_ += 24;
+         new PhantomButton("Import Data(D)",this.importData,this.panelFile,_loc5_,_loc6_,_loc7_);
+         _loc6_ += 24;
          new PhantomButton("Save (S)",this.saveGraph,this.panelFile,_loc5_,_loc6_,_loc7_);
-         _loc6_ += 28;
+         _loc6_ += 24;
          new PhantomButton("Export Selection (E)",this.saveSelection,this.panelFile,_loc5_,_loc6_,_loc7_);
-         _loc6_ += 28;
+         _loc6_ += 24;
          new PhantomButton("Save as SVG (G)",this.saveAsSVG,this.panelFile,_loc5_,_loc6_,_loc7_);
-         _loc6_ += 28;
+         _loc6_ += 24;
          _loc6_ = 4;
          new PhantomButton("Select All (A)",this.selectAll,this.panelEdit,_loc5_,_loc6_,_loc7_);
          _loc6_ += 28;
@@ -285,11 +292,29 @@ package nl.jorisdormans.machinations.view
          this.fileIOImport.onLoadComplete = this.onImportGraph;
          this.fileIOImport.openFileDialog("Import File");
       }
+
+      private function importData(param1:PhantomButton) : void
+      {
+         this.fileIOData.onLoadComplete = this.onImportData;
+         this.fileIOData.openFileCSVDialog("Import File");
+      }
       
       public function onImportGraph() : void
       {
          selectAddedElements = true;
          this.graph.addXML(this.fileIOImport.data);
+         selectAddedElements = false;
+      }
+
+      public function onImportData() : void
+      {
+         this.deselectAll();
+         selectAddedElements = true;
+//         this.graph.addXML(this.fileIOImport.data);
+         this.graph.addCSV(this.fileIOData.csvData);
+
+//         SimpleDebugger.debug.save();
+
          selectAddedElements = false;
       }
       
@@ -1471,6 +1496,12 @@ package nl.jorisdormans.machinations.view
                      if(_elements[_loc5_].element is Pool)
                      {
                         (_elements[_loc5_].element as Pool).rewardNumber = param3;
+                     }
+                     break;
+                  case "captionLabel":
+                     if(_elements[_loc5_].element is MachinationsConnection)
+                     {
+                        (_elements[_loc5_].element as MachinationsConnection).captionLabel = param2;
                      }
                      break;
                   case "gateType":

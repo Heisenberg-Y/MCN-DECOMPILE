@@ -27,6 +27,7 @@ package nl.jorisdormans.machinations.model
          super.readXML(param1);
          this.resourceColor = StringUtil.toColor(param1.@resourceColor);
       }
+
       
       public function get resourceColor() : uint
       {

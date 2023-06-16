@@ -3,7 +3,8 @@ package nl.jorisdormans.machinations.view
    import flash.display.DisplayObjectContainer;
    import flash.display.Stage;
    import nl.jorisdormans.graph.GraphElement;
-   import nl.jorisdormans.machinations.model.Source;
+import nl.jorisdormans.graph.GraphEvent;
+import nl.jorisdormans.machinations.model.Source;
    import nl.jorisdormans.phantomGUI.PhantomControl;
    import nl.jorisdormans.phantomGUI.PhantomEditBox;
    import nl.jorisdormans.phantomGUI.PhantomLabel;
@@ -22,6 +23,7 @@ package nl.jorisdormans.machinations.view
          this.resourceColor = new PhantomEditBox("Color",this,controlX,controlY,controlW);
          this.resourceColor.onChange = this.changeValue;
          controlY += 28;
+
       }
       
       override public function get element() : GraphElement

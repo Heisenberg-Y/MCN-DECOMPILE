@@ -2,8 +2,13 @@
 {
    import flash.events.EventDispatcher;
    import flash.geom.Vector3D;
-   
-   public class Graph extends EventDispatcher
+
+import nl.jorisdormans.utils.CSVHelper;
+
+import nl.jorisdormans.utils.CSVItem;
+import nl.jorisdormans.utils.SimpleDebugger;
+
+public class Graph extends EventDispatcher
    {
        
       
@@ -47,6 +52,18 @@
             this.elements[_loc2_].id = _loc2_;
             _loc2_++;
          }
+      }
+
+      public function addCSV(csvHelper: CSVHelper): void {
+         var element: GraphElement = null;
+         var csvItem: CSVItem = null;
+         csvHelper.parse();
+         for each(element in elements){
+            for each(csvItem in csvHelper.getItems()){
+               element.tryReadCSVItem(csvItem);
+            }
+         }
+         dispatchEvent(new GraphEvent(GraphEvent.ELEMENT_CSV_ATTR_CHANGE));
       }
       
       public function generateXML() : XML
