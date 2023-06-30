@@ -8,6 +8,8 @@ import nl.jorisdormans.machinations.model.Pool;
    import nl.jorisdormans.phantomGUI.PhantomControl;
    import nl.jorisdormans.phantomGUI.PhantomEditNumberBox;
    import nl.jorisdormans.phantomGUI.PhantomLabel;
+import nl.jorisdormans.utils.DataEvent;
+import nl.jorisdormans.utils.DataEventDispatcher;
 import nl.jorisdormans.utils.SimpleDebugger;
 
 public class EditPoolPanel extends EditSourcePanel
@@ -52,7 +54,6 @@ public class EditPoolPanel extends EditSourcePanel
          this.tokenLimit.max = 25;
          this.rewardNumber.onChange = this.changeValue;
          controlY += 28;
-         SimpleDebugger.debug.write("call refresh....");
 
       }
       
@@ -96,8 +97,12 @@ public class EditPoolPanel extends EditSourcePanel
          }
       }
 
-      protected function refresh(){
-         SimpleDebugger.debug.write("call refresh....");
+      protected override function refresh(event: DataEvent): void{
+         var param1:GraphElement = this.element
+         this.number.value = (param1 as Pool).startingResources;
+         this.max.value = (param1 as Pool).capacity;
+         this.tokenLimit.value = (param1 as Pool).displayCapacity;
+         this.rewardNumber.value = (param1 as Pool).rewardNumber;
       }
    }
 }

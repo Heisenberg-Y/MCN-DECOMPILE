@@ -17,8 +17,10 @@ package nl.jorisdormans.machinations.view
    import nl.jorisdormans.phantomGUI.PhantomPanel;
    import nl.jorisdormans.phantomGUI.PhantomToolTip;
    import nl.jorisdormans.utils.FileIO;
-   
-   public class MachinationsView extends PhantomBorder
+import nl.jorisdormans.utils.RemoteController;
+import nl.jorisdormans.utils.SimpleDebugger;
+
+public class MachinationsView extends PhantomBorder
    {
       
       protected static const topPanelHeight:Number = 34;
@@ -43,6 +45,8 @@ package nl.jorisdormans.machinations.view
       protected var topPanel:PhantomPanel;
       
       public var runButton:PhantomButton;
+
+      public var controlButton: PhantomButton;
       
       public var quickRun:PhantomButton;
       
@@ -59,6 +63,8 @@ package nl.jorisdormans.machinations.view
       private var toolTip:PhantomToolTip;
       
       private var popup:nl.jorisdormans.machinations.view.PopUp;
+
+      protected var remoteControl: RemoteController
       
       public function MachinationsView(param1:DisplayObjectContainer, param2:Number, param3:Number, param4:Number, param5:Number)
       {
@@ -67,6 +73,7 @@ package nl.jorisdormans.machinations.view
          this.createControls();
          this.fileIO = new FileIO();
          this.runAfterLoad = false;
+         this.remoteControl = new RemoteController()
       }
       
       protected function createControls() : void
@@ -81,14 +88,23 @@ package nl.jorisdormans.machinations.view
          this.drawPanel.mouseChildren = false;
          this.topBorder = new PhantomBorder(parent,x,y + _controlHeight,_controlWidth,topPanelHeight + 2);
          this.topPanel = new PhantomPanel(this.topBorder,2,0,_controlWidth - 4,topPanelHeight);
-         this.runButton = new PhantomButton("Run (R)1111111",this.run,this.topPanel,4,4,88,24);
+         this.runButton = new PhantomButton("Run (R)",this.run,this.topPanel,4,4,88,24);
          this.runButton.glyph = PhantomGlyph.PLAY;
+
+         this.controlButton = new PhantomButton("Remote",this.remote_control, this.topPanel,100,4,88,24);
+         this.controlButton.glyph = PhantomGlyph.PLAY;
+
          this.title = new PhantomLabel("*title",this.topPanel,92,-2,_controlWidth - 100);
          this.data = new PhantomLabel("data",this.topPanel,92,14,_controlWidth - 100);
          this.title.caption = "Loading file...";
          this.data.caption = "...";
          addEventListener(MouseEvent.MOUSE_DOWN,this.onMouseDownView);
          addEventListener(MouseEvent.MOUSE_MOVE,this.onMouseMoveView);
+
+         this.remoteControl.SetGraph(this._graph)
+
+
+
       }
       
       protected function onMouseDownView(param1:MouseEvent) : void
@@ -226,7 +242,12 @@ package nl.jorisdormans.machinations.view
             this._graph.addEventListener(GraphEvent.ELEMENT_ADD,this.onElementAdd);
             this._graph.addEventListener(GraphEvent.GRAPH_WARNING,this.onWarning);
             this._graph.addEventListener(GraphEvent.GRAPH_ERROR,this.onError);
+
          }
+         if(this._graph != null){
+            this.remoteControl.SetGraph(this._graph)
+         }
+
       }
       
       private function onElementAdd(param1:GraphEvent) : void
@@ -414,6 +435,15 @@ package nl.jorisdormans.machinations.view
             this.runButton.caption = "Run (R)";
             this.runButton.glyph = PhantomGlyph.PLAY;
             this.setControls(true);
+         }
+      }
+
+      protected function remote_control(aram1:PhantomButton): void {
+         remoteControl.pressControl()
+         if(remoteControl.running){
+            this.controlButton.caption = "Pulling"
+         } else {
+            this.controlButton.caption = "Remote"
          }
       }
       

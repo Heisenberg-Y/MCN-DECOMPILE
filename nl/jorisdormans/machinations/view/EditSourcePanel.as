@@ -8,7 +8,9 @@ import nl.jorisdormans.machinations.model.Source;
    import nl.jorisdormans.phantomGUI.PhantomControl;
    import nl.jorisdormans.phantomGUI.PhantomEditBox;
    import nl.jorisdormans.phantomGUI.PhantomLabel;
-   import nl.jorisdormans.utils.StringUtil;
+import nl.jorisdormans.utils.DataEvent;
+import nl.jorisdormans.utils.DataEventDispatcher;
+import nl.jorisdormans.utils.StringUtil;
    
    public class EditSourcePanel extends EditNodePanel
    {
@@ -51,5 +53,6 @@ import nl.jorisdormans.machinations.model.Source;
             super.changeValue(param1);
          }
       }
+
    }
 }

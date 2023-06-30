@@ -12,8 +12,9 @@ package nl.jorisdormans.machinations.view
    import nl.jorisdormans.phantomGUI.PhantomEditNumberBox;
    import nl.jorisdormans.phantomGUI.PhantomLabel;
    import nl.jorisdormans.phantomGUI.PhantomToolButton;
-   
-   public class EditDelayPanel extends EditElementPanel
+import nl.jorisdormans.utils.DataEvent;
+
+public class EditDelayPanel extends EditElementPanel
    {
        
       
@@ -141,6 +142,48 @@ package nl.jorisdormans.machinations.view
          else
          {
             super.changeValue(param1);
+         }
+      }
+
+      protected override function refresh(e: DataEvent): void {
+         var param1:GraphElement = this.element;
+         if(param1 is MachinationsNode)
+         {
+            this.label.caption = (param1 as MachinationsNode).caption;
+         }
+         if(param1 is MachinationsNode && Boolean(this.passive))
+         {
+            this.passive.selected = (param1 as MachinationsNode).activationMode == MachinationsNode.MODE_PASSIVE;
+         }
+         if(param1 is MachinationsNode && Boolean(this.interactive))
+         {
+            this.interactive.selected = (param1 as MachinationsNode).activationMode == MachinationsNode.MODE_INTERACTIVE;
+         }
+         if(param1 is MachinationsNode && Boolean(this.automatic))
+         {
+            this.automatic.selected = (param1 as MachinationsNode).activationMode == MachinationsNode.MODE_AUTOMATIC;
+         }
+         if(param1 is MachinationsNode && Boolean(this.onStart))
+         {
+            this.onStart.selected = (param1 as MachinationsNode).activationMode == MachinationsNode.MODE_ONSTART;
+         }
+         if(param1 is MachinationsNode && Boolean(this.actions))
+         {
+            this.actions.value = (param1 as MachinationsNode).actions;
+            if(((param1 as MachinationsNode).graph as MachinationsGraph).timeMode == MachinationsGraph.TIME_MODE_TURN_BASED)
+            {
+               this.actions.enabled = this.interactive.selected;
+               this.actionsLabel.enabled = this.interactive.selected;
+            }
+            else
+            {
+               this.actions.enabled = false;
+               this.actionsLabel.enabled = false;
+            }
+         }
+         if(param1 is Delay && Boolean(this.queue))
+         {
+            this.queue.checked = (param1 as Delay).delayType == Delay.TYPE_QUEUE;
          }
       }
    }

@@ -11,8 +11,10 @@ package nl.jorisdormans.machinations.view
    import nl.jorisdormans.phantomGUI.PhantomEditNumberBox;
    import nl.jorisdormans.phantomGUI.PhantomLabel;
    import nl.jorisdormans.phantomGUI.PhantomToolButton;
-   
-   public class EditNodePanel extends EditElementPanel
+import nl.jorisdormans.utils.DataEvent;
+import nl.jorisdormans.utils.DataEventDispatcher;
+
+public class EditNodePanel extends EditElementPanel
    {
        
       
@@ -77,6 +79,8 @@ package nl.jorisdormans.machinations.view
             this.pullMode.onChange = this.changeValue;
             controlY += 28;
          }
+
+
       }
       
       override public function get element() : GraphElement
@@ -163,5 +167,7 @@ package nl.jorisdormans.machinations.view
             super.changeValue(param1);
          }
       }
+
+
    }
 }

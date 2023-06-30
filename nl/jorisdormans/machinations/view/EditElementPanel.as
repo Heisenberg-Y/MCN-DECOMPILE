@@ -23,7 +23,9 @@ import nl.jorisdormans.machinations.model.ArtificialPlayer;
    import nl.jorisdormans.phantomGUI.PhantomEditNumberBox;
    import nl.jorisdormans.phantomGUI.PhantomLabel;
    import nl.jorisdormans.phantomGUI.PhantomPanel;
-   import nl.jorisdormans.utils.StringUtil;
+import nl.jorisdormans.utils.DataEvent;
+import nl.jorisdormans.utils.DataEventDispatcher;
+import nl.jorisdormans.utils.StringUtil;
    
    public class EditElementPanel extends PhantomPanel
    {
@@ -72,6 +74,8 @@ import nl.jorisdormans.machinations.model.ArtificialPlayer;
             this.thickness.onChange = this.changeValue;
             this.controlY += 28;
          }
+
+         DataEventDispatcher.GetInstance().addEventListener(DataEvent.CSV_ATTR_CHANGED, this.refresh)
 
       }
       
@@ -160,6 +164,10 @@ import nl.jorisdormans.machinations.model.ArtificialPlayer;
             case this.thickness:
                this.view.setValue("thickness",null,this.thickness.value);
          }
+      }
+
+      protected function refresh(e: DataEvent): void {
+
       }
    }
 }

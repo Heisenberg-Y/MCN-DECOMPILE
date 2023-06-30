@@ -3,13 +3,18 @@ import flash.utils.ByteArray;
 public class CSVHelper {
     private var data: String;
     private var items: Vector.<CSVItem>;
-    public function CSVHelper(data: ByteArray)
+    public function CSVHelper(data: ByteArray = null, content: String = null)
     {
-        this.data = data.toString();
+        if(data != null){
+            this.data = data.toString();
+        } else {
+            this.data = content
+        }
 
         this.items = new Vector.<CSVItem>();
         super();
     }
+
 
     public function parse(): void{
         var arr: Array = this.data.split("\r\n");
@@ -20,8 +25,11 @@ public class CSVHelper {
             item.setCaption(dels[0]);
             item.setAttribute(dels[1]);
             item.setValue(dels[2]);
-            this.items.push(item);
-            SimpleDebugger.debug.write(item.toString());
+            if(item.getCaption() != null && item.getValue() != null && item.getAttribute() != null){
+                this.items.push(item);
+                SimpleDebugger.debug.write(item.toString());
+            }
+
         }
     }
 

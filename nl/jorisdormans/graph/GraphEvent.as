@@ -10,6 +10,7 @@ package nl.jorisdormans.graph
       public static const ELEMENT_CHANGE:String = "element_change";
 
       public static const ELEMENT_CSV_ATTR_CHANGE:String = "element_csv_attr_change";
+      public static const CSV_LOADED:String = "element_csv_attr_change";
       
       public static const ELEMENT_DISPOSE:String = "element_dispose";
       

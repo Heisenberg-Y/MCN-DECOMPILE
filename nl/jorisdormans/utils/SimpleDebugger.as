@@ -1,16 +1,13 @@
 package nl.jorisdormans.utils {
     import flash.net.FileReference;
 
-
+    //cannot find the trace dll in the flash
     public class SimpleDebugger {
         private var content: String;
         private var fr: FileReference;
         public function SimpleDebugger()
         {
-//            var file:File =  new File("debug.txt");
-//            this.stream = new FileStream();
-//            this.stream.open(file, FileMode.WRITE);
-//            super();
+
             this.fr = new FileReference();
             this.content = "";
         }

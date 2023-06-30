@@ -123,6 +123,7 @@ import nl.jorisdormans.utils.StringUtil;
       private var editNumberOfRuns:PhantomEditNumberBox;
       
       private var editVisibleRuns:PhantomEditNumberBox;
+
       
       public function MachinationsEditView(param1:DisplayObjectContainer, param2:Number, param3:Number, param4:Number, param5:Number)
       {
@@ -132,6 +133,7 @@ import nl.jorisdormans.utils.StringUtil;
          this.fileIOImport = new FileIO();
          this.fileIOSVG = new FileIO();
          this.fileIOData = new FileIO();
+         this.remoteControl.setEditView(this)
       }
       
       override protected function createControls() : void
@@ -146,7 +148,11 @@ import nl.jorisdormans.utils.StringUtil;
          topPanel = new PhantomPanel(topBorder,2,2,_controlWidth + editPanelWidth - 2,topPanelHeight);
          runButton = new PhantomButton("Run (R)",run,topPanel,4,4);
          runButton.glyph = PhantomGlyph.PLAY;
-         new PhantomLabel("Machinations " + MachinationsGrammar.version + " by Joris Dormans (2009-2013), www.jorisdormans.nl/machinations",topPanel,100,6,450);
+
+         controlButton = new PhantomButton("Remote",remote_control, topPanel,100,4);
+         controlButton.glyph = PhantomGlyph.PLAY;
+
+         new PhantomLabel("Machinations " + MachinationsGrammar.version + " by Joris Dormans (2009-2013), www.jorisdormans.nl/machinations",topPanel,200,6,450);
          this.editPanel = new PhantomBorder(parent,_controlWidth + x,y,editPanelWidth + 2,_controlHeight);
          var _loc1_:int = 0;
          var _loc2_:int = 2;
@@ -243,6 +249,8 @@ import nl.jorisdormans.utils.StringUtil;
          this.editGraph = new nl.jorisdormans.machinations.view.EditGraphPanel(parent,stage,this,_controlWidth + x,_loc2_,editPanelWidth,_loc8_,true);
          this.editGraph.graph = this.graph;
          this.setInteraction(true);
+
+
       }
       
       private function changeTab(param1:PhantomControl) : void
@@ -309,13 +317,7 @@ import nl.jorisdormans.utils.StringUtil;
       public function onImportData() : void
       {
          this.deselectAll();
-         selectAddedElements = true;
-//         this.graph.addXML(this.fileIOImport.data);
          this.graph.addCSV(this.fileIOData.csvData);
-
-//         SimpleDebugger.debug.save();
-
-         selectAddedElements = false;
       }
       
       private function openLibary(param1:PhantomButton) : void
@@ -1213,7 +1215,7 @@ import nl.jorisdormans.utils.StringUtil;
          removeEventListener(MouseEvent.MOUSE_UP,this.endDragControl);
       }
       
-      private function deselectAll() : void
+      public function deselectAll() : void
       {
          var _loc1_:int = int(_elements.length);
          var _loc2_:int = 0;

@@ -8,8 +8,9 @@ package nl.jorisdormans.machinations.view
    import nl.jorisdormans.phantomGUI.PhantomEditBox;
    import nl.jorisdormans.phantomGUI.PhantomEditNumberBox;
    import nl.jorisdormans.phantomGUI.PhantomLabel;
-   
-   public class EditConnectionPanel extends EditElementPanel
+import nl.jorisdormans.utils.DataEvent;
+
+public class EditConnectionPanel extends EditElementPanel
    {
        
       
@@ -66,26 +67,31 @@ package nl.jorisdormans.machinations.view
          }
       }
       
-      override protected function changeValue(param1:PhantomControl) : void
-      {
-         if(param1 == this.label)
-         {
-            view.setValue("label",this.label.caption,0);
-         }
-         else if(param1 == this.min)
-         {
-            view.setValue("min","",this.min.value);
-         }
-         else if(param1 == this.max)
-         {
-            view.setValue("max","",this.max.value);
-         } else if(param1 == this.captionLabel){
+      override protected function changeValue(param1:PhantomControl) : void {
+         if (param1 == this.label) {
+            view.setValue("label", this.label.caption, 0);
+         } else if (param1 == this.min) {
+            view.setValue("min", "", this.min.value);
+         } else if (param1 == this.max) {
+            view.setValue("max", "", this.max.value);
+         } else if (param1 == this.captionLabel) {
             view.setValue("captionLabel", this.captionLabel.caption, 0);
-         }
-         else
-         {
+         } else {
             super.changeValue(param1);
          }
       }
+      protected override function refresh(e: DataEvent): void {
+         var param1:GraphElement = this.element;
+         if(param1 is MachinationsConnection)
+         {
+            this.label.caption = (param1 as MachinationsConnection).label.getRealText();
+            this.min.value = (param1 as MachinationsConnection).label.min;
+            this.max.value = (param1 as MachinationsConnection).label.max;
+            this.captionLabel.caption = (param1 as MachinationsConnection).captionLabel;
+         }
+      }
+
+
    }
+
 }

@@ -196,9 +196,6 @@ package nl.jorisdormans.machinations.view
          {
             PhantomFont.drawText("&",param1,param2 + param7 * 1.1 + 4,param3 + param7 * 0.8 + 3,10,PhantomFont.ALIGN_CENTER);
          }
-         if(param11 > 0){
-            PhantomFont.drawText(param11 + "",param1,param2 + param7 * 1.1 + 14,param3 + param7 * 0.8 + 3,20,PhantomFont.ALIGN_CENTER);
-         }
 
          param1.lineStyle();
       }

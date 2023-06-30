@@ -10,8 +10,9 @@ package nl.jorisdormans.machinations.view
    import nl.jorisdormans.phantomGUI.PhantomEditBox;
    import nl.jorisdormans.phantomGUI.PhantomEditNumberBox;
    import nl.jorisdormans.phantomGUI.PhantomLabel;
-   
-   public class EditRegisterPanel extends EditElementPanel
+import nl.jorisdormans.utils.DataEvent;
+
+public class EditRegisterPanel extends EditElementPanel
    {
        
       
@@ -141,6 +142,31 @@ package nl.jorisdormans.machinations.view
          else
          {
             super.changeValue(param1);
+         }
+      }
+
+      protected override function refresh(e: DataEvent): void {
+         var param1:GraphElement = this.element;
+         if(param1 is Register)
+         {
+            this.label.caption = (param1 as Register).caption;
+            this.min.value = (param1 as Register).minValue;
+            this.max.value = (param1 as Register).maxValue;
+            this.start.value = (param1 as Register).startValue;
+            this.step.value = (param1 as Register).valueStep;
+            this.interactive.checked = (param1 as Register).activationMode == MachinationsNode.MODE_INTERACTIVE;
+            this.start.enabled = this.interactive.checked;
+            this.step.enabled = this.interactive.checked;
+            this.startLabel.enabled = this.interactive.checked;
+            this.stepLabel.enabled = this.interactive.checked;
+            if((param1 as Register).activationMode == MachinationsNode.MODE_INTERACTIVE)
+            {
+               this.formulaLabel.caption = "Label";
+            }
+            else
+            {
+               this.formulaLabel.caption = "Formula";
+            }
          }
       }
    }

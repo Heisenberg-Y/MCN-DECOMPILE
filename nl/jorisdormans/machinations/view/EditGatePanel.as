@@ -7,8 +7,9 @@ package nl.jorisdormans.machinations.view
    import nl.jorisdormans.phantomGUI.PhantomControl;
    import nl.jorisdormans.phantomGUI.PhantomLabel;
    import nl.jorisdormans.phantomGUI.PhantomToolButton;
-   
-   public class EditGatePanel extends EditNodePanel
+import nl.jorisdormans.utils.DataEvent;
+
+public class EditGatePanel extends EditNodePanel
    {
        
       
@@ -83,6 +84,18 @@ package nl.jorisdormans.machinations.view
          else
          {
             super.changeValue(param1);
+         }
+      }
+
+      protected override function refresh(event: DataEvent): void{
+         var param1:GraphElement = this.element;
+         if(param1 is Gate)
+         {
+            this.deterministic.selected = (param1 as Gate).gateType == Gate.GATE_DETERMINISTIC;
+            this.dice.selected = (param1 as Gate).gateType == Gate.GATE_DICE;
+            this.skill.selected = (param1 as Gate).gateType == Gate.GATE_SKILL;
+            this.strategy.selected = (param1 as Gate).gateType == Gate.GATE_STRATEGY;
+            this.multiplayer.selected = (param1 as Gate).gateType == Gate.GATE_MULTIPLAYER;
          }
       }
    }

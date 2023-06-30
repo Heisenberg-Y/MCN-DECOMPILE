@@ -6,7 +6,10 @@
 import nl.jorisdormans.utils.CSVHelper;
 
 import nl.jorisdormans.utils.CSVItem;
+import nl.jorisdormans.utils.DataEvent;
+import nl.jorisdormans.utils.DataEventDispatcher;
 import nl.jorisdormans.utils.SimpleDebugger;
+import nl.jorisdormans.utils.DataEventDispatcher
 
 public class Graph extends EventDispatcher
    {
@@ -57,13 +60,21 @@ public class Graph extends EventDispatcher
       public function addCSV(csvHelper: CSVHelper): void {
          var element: GraphElement = null;
          var csvItem: CSVItem = null;
+
          csvHelper.parse();
+         DataEventDispatcher.GetInstance().dispatchEvent(new DataEvent(DataEvent.CSV_LOADED));
+
          for each(element in elements){
+
             for each(csvItem in csvHelper.getItems()){
-               element.tryReadCSVItem(csvItem);
+               var matched: Boolean = element.tryReadCSVItem(csvItem);
+               if(matched){
+                  DataEventDispatcher.GetInstance().dispatchEvent(new DataEvent(DataEvent.CSV_ATTR_CHANGED));
+                  dispatchEvent(new GraphEvent(GraphEvent.ELEMENT_CHANGE, element));
+               }
             }
          }
-         dispatchEvent(new GraphEvent(GraphEvent.ELEMENT_CSV_ATTR_CHANGE));
+
       }
       
       public function generateXML() : XML

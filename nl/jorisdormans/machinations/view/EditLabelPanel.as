@@ -6,8 +6,9 @@ package nl.jorisdormans.machinations.view
    import nl.jorisdormans.phantomGUI.PhantomControl;
    import nl.jorisdormans.phantomGUI.PhantomEditBox;
    import nl.jorisdormans.phantomGUI.PhantomLabel;
-   
-   public class EditLabelPanel extends EditElementPanel
+import nl.jorisdormans.utils.DataEvent;
+
+public class EditLabelPanel extends EditElementPanel
    {
        
       
@@ -47,5 +48,15 @@ package nl.jorisdormans.machinations.view
             super.changeValue(param1);
          }
       }
+
+      protected override function refresh(e: DataEvent): void {
+         var param1:GraphElement = this.element;
+         if(param1 is MachinationsNode)
+         {
+            this.label.caption = (param1 as MachinationsNode).caption;
+         }
+      }
+
+
    }
 }
