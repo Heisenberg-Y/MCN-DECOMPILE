@@ -15,6 +15,8 @@ package nl.jorisdormans.utils
       public var fileName:String = "";
       
       public var data:XML;
+
+      public var csvData:CSVHelper;
       
       public var textData:String;
       
@@ -73,12 +75,21 @@ package nl.jorisdormans.utils
          this.file.removeEventListener(IOErrorEvent.IO_ERROR,this.onFileError);
          this.file.removeEventListener(Event.COMPLETE,this.loadFileComplete);
       }
-      
+
       private function loadFileComplete(param1:Event) : void
       {
          this.file.removeEventListener(IOErrorEvent.IO_ERROR,this.onFileError);
          this.file.removeEventListener(Event.COMPLETE,this.loadFileComplete);
-         this.data = XML(this.file.data);
+
+         var fileExtension:String = this.fileName.substr(this.fileName.lastIndexOf(".") + 1).toLowerCase()
+         if (fileExtension == "csv") {
+            this.csvData = new CSVHelper(this.file.data)
+         } else if (fileExtension == "xml") {
+            this.data = XML(this.file.data);
+         } else {
+            trace("[Error] Wrong file extension: ", fileExtension)
+         }
+         
          if(this.onLoadComplete != null)
          {
             this.onLoadComplete();
