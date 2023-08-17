@@ -4,7 +4,8 @@ package nl.jorisdormans.machinations.model
    import nl.jorisdormans.graph.GraphConnection;
    import nl.jorisdormans.graph.GraphEvent;
    import nl.jorisdormans.phantomGraphics.PhantomFont;
-   import nl.jorisdormans.utils.MathUtil;
+import nl.jorisdormans.utils.CSVItem;
+import nl.jorisdormans.utils.MathUtil;
    import nl.jorisdormans.utils.StringUtil;
    
    public class MachinationsConnection extends GraphConnection
@@ -189,6 +190,28 @@ package nl.jorisdormans.machinations.model
          }
          this.thickness = param1.@thickness;
          this.captionLabel = param1.@captionLabel;
+      }
+
+      override public function importCSVItem(csvItem: CSVItem): Boolean {
+         trace("MachinationsConnection, importCSVItem");
+         if(super.importCSVItem(csvItem)) {
+            if(this.captionLabel != csvItem.getCaption()){
+               return false;
+            }
+            switch (csvItem.getAttribute()){
+               case CSVItem.MIN_VALUE:
+                  this.label.min = parseFloat(csvItem.getValue());
+                  break;
+               case CSVItem.MAX_VALUE:
+                  this.label.max = parseFloat(csvItem.getValue());
+                  break;
+               case CSVItem.LABEL:
+                  this.label.text = csvItem.getValue();
+                  break;
+            }
+            return true;
+         }
+         return false;
       }
       
       public function prepare(param1:Boolean) : void

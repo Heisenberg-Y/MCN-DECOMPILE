@@ -28,6 +28,7 @@ package nl.jorisdormans.machinations.view
    import nl.jorisdormans.phantomGUI.PhantomDrawPanel;
    import nl.jorisdormans.phantomGraphics.DrawUtil;
    import nl.jorisdormans.phantomGraphics.PhantomFont;
+   import nl.jorisdormans.utils.CSVItem;
    import nl.jorisdormans.utils.MathUtil;
    import nl.jorisdormans.utils.StringUtil;
    
@@ -85,6 +86,16 @@ package nl.jorisdormans.machinations.view
       private function onElementChanged(param1:GraphEvent) : void
       {
          this.draw();
+      }
+
+      public function importCSVItem(csvItem: CSVItem): Boolean {
+         if (this.element.importCSVItem(csvItem)) {
+            this.draw();
+            trace(csvItem.toString(), "draw finished");
+            return true;
+         }
+         trace(csvItem.toString(), "no draw");
+         return false;
       }
       
       public function get element() : GraphElement

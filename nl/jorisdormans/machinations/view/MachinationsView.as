@@ -16,6 +16,8 @@ package nl.jorisdormans.machinations.view
    import nl.jorisdormans.phantomGUI.PhantomLabel;
    import nl.jorisdormans.phantomGUI.PhantomPanel;
    import nl.jorisdormans.phantomGUI.PhantomToolTip;
+   import nl.jorisdormans.utils.CSVHelper;
+   import nl.jorisdormans.utils.CSVItem;
    import nl.jorisdormans.utils.FileIO;
    
    public class MachinationsView extends PhantomBorder
@@ -180,6 +182,17 @@ package nl.jorisdormans.machinations.view
          else
          {
             buttonMode = false;
+         }
+      }
+
+      public function importCSV2Elements(csvHelper: CSVHelper): void {
+         var element: MachinationsViewElement = null;
+         var csvItem: CSVItem = null;
+         for each(element in _elements){
+            for each(csvItem in csvHelper.getItems()){
+               trace("============================================");
+               element.importCSVItem(csvItem);
+            }
          }
       }
       

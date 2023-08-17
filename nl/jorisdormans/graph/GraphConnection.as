@@ -1,6 +1,9 @@
 package nl.jorisdormans.graph
 {
    import flash.geom.Vector3D;
+
+import nl.jorisdormans.machinations.model.MachinationsConnection;
+import nl.jorisdormans.utils.CSVItem;
    import nl.jorisdormans.utils.MathUtil;
    
    public class GraphConnection extends nl.jorisdormans.graph.GraphElement
@@ -87,6 +90,17 @@ package nl.jorisdormans.graph
          else
          {
             this._endPoint = this.points[this.points.length - 1].clone();
+         }
+      }
+
+      override public function importCSVItem(csvItem : CSVItem): Boolean{
+         trace("GraphConnection, importCSVItem");
+         // MachinationsConnection & ResourceConnection & StateConnection
+         if (this is MachinationsConnection) {
+            return true;
+         } else {
+            trace("it's not a MachinationsConnection");
+            return false;
          }
       }
       

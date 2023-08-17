@@ -306,13 +306,10 @@ package nl.jorisdormans.machinations.view
 
       public function onImportData() : void
       {
-         this.deselectAll();
-         selectAddedElements = true;
-         // this.graph.addCSV(this.fileIOData.csvData);
          this.fileIOData.csvData.parse();
-         trace("import finished: ", this.fileIOData.csvData.getItems().toString());
-         trace("---------------------");
-         selectAddedElements = false;
+         this.deselectAll();
+         this.importCSV2Elements(this.fileIOData.csvData)
+         this.activePanel = this.activePanel;
       }
       
       private function openLibary(param1:PhantomButton) : void
