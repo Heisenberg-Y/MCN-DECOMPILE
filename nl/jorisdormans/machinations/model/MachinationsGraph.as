@@ -20,6 +20,8 @@ package nl.jorisdormans.machinations.model
        
       
       private var _running:Boolean;
+
+      private var _pulling:Boolean;
       
       public var fireInterval:Number;
       
@@ -92,6 +94,7 @@ package nl.jorisdormans.machinations.model
          super();
          grammar = new MachinationsGrammar();
          this._running = false;
+         this._pulling = false;
       }
       
       override public function clear() : void
@@ -209,6 +212,15 @@ package nl.jorisdormans.machinations.model
          {
             this.stop();
          }
+      }
+
+      public function get pulling() : Boolean
+      {
+         return this._pulling;
+      }
+
+      public function set pulling(param1:Boolean) : void {
+         this._pulling = param1;
       }
       
       public function end(param1:String) : void

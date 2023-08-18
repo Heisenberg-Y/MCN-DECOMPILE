@@ -5,8 +5,13 @@ public class CSVHelper {
     private var data:String;
     private var items:Vector.<CSVItem>;
 
-    public function CSVHelper(data:ByteArray) {
-        this.data = data.toString();
+    public function CSVHelper(data: ByteArray = null, content: String = null) {
+        if(data != null){
+            this.data = data.toString();
+        } else {
+            this.data = content
+        }
+
         this.items = new Vector.<CSVItem>();
         super();
     }

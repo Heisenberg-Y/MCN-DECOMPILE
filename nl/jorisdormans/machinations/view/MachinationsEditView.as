@@ -36,7 +36,8 @@ package nl.jorisdormans.machinations.view
    import nl.jorisdormans.phantomGUI.PhantomPanel;
    import nl.jorisdormans.phantomGUI.PhantomTabButton;
    import nl.jorisdormans.phantomGUI.PhantomToolButton;
-   import nl.jorisdormans.utils.FileIO;
+import nl.jorisdormans.utils.CSVHelper;
+import nl.jorisdormans.utils.FileIO;
    import nl.jorisdormans.utils.StringUtil;
    
    public class MachinationsEditView extends MachinationsView
@@ -144,7 +145,9 @@ package nl.jorisdormans.machinations.view
          topPanel = new PhantomPanel(topBorder,2,2,_controlWidth + editPanelWidth - 2,topPanelHeight);
          runButton = new PhantomButton("Run (R)",run,topPanel,4,4);
          runButton.glyph = PhantomGlyph.PLAY;
-         new PhantomLabel("Machinations " + MachinationsGrammar.version + " by Joris Dormans (2009-2013), www.jorisdormans.nl/machinations",topPanel,100,6,450);
+         controlButton = new PhantomButton("Remote",remote_control, topPanel,100,4);
+         controlButton.glyph = PhantomGlyph.PLAY;
+         new PhantomLabel("Machinations " + MachinationsGrammar.version + " by Joris Dormans (2009-2013), www.jorisdormans.nl/machinations",topPanel,200,6,450);
          this.editPanel = new PhantomBorder(parent,_controlWidth + x,y,editPanelWidth + 2,_controlHeight);
          var _loc1_:int = 0;
          var _loc2_:int = 2;
@@ -306,12 +309,16 @@ package nl.jorisdormans.machinations.view
 
       public function onImportData() : void
       {
-         this.fileIOData.csvData.parse();
-         this.deselectAll();
-         this.importCSV2Elements(this.fileIOData.csvData)
+         onImportDataDetail(this.fileIOData.csvData);
+      }
+
+      public function onImportDataDetail(csvHelper: CSVHelper) : void {
+         csvHelper.parse();
+         // this.deselectAll();
+         this.importCSV2Elements(csvHelper)
          this.activePanel = this.activePanel;
       }
-      
+
       private function openLibary(param1:PhantomButton) : void
       {
       }
