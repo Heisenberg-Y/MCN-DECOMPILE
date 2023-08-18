@@ -1,12 +1,18 @@
 package nl.jorisdormans.machinations.controller
 {
    import flash.events.Event;
+   import flash.utils.clearTimeout;
    import flash.utils.getTimer;
+   import flash.utils.setTimeout;
    import nl.jorisdormans.graph.GraphEvent;
    import nl.jorisdormans.machinations.model.MachinationsGraph;
-   import nl.jorisdormans.machinations.view.MachinationsView;
+import nl.jorisdormans.machinations.view.MachinationsEditView;
+import nl.jorisdormans.machinations.view.MachinationsView;
    import nl.jorisdormans.machinations.view.RunReport;
-   
+   import nl.jorisdormans.utils.CSVHelper;
+   import nl.jorisdormans.utils.JobFetcher;
+   import nl.jorisdormans.utils.RemoteJob;
+
    public class MachinationsController
    {
        
@@ -20,6 +26,12 @@ package nl.jorisdormans.machinations.controller
       private var report:RunReport;
       
       private var timer:int;
+
+      private var jobFetcher:JobFetcher;
+
+      private var intervalId:uint;
+
+      private var pullingInterval: int = 5000;
       
       public function MachinationsController(param1:MachinationsGraph, param2:MachinationsView)
       {
@@ -27,7 +39,10 @@ package nl.jorisdormans.machinations.controller
          this.graph = param1;
          this.view = param2;
          this.view.graph = param1;
+         this.jobFetcher = new JobFetcher();
+         this.intervalId = 0;
          param2.addEventListener(GraphEvent.GRAPH_RUN,this.onRun);
+         param2.addEventListener(GraphEvent.GRAPH_PULL,this.onPull);
          param2.addEventListener(GraphEvent.GRAPH_QUICKRUN,this.onQuickRun);
          param2.addEventListener(GraphEvent.GRAPH_MULTIPLERUN,this.onMultipleRun);
       }
@@ -155,6 +170,49 @@ package nl.jorisdormans.machinations.controller
             this.view.setInteraction(true);
             this.view.removeEventListener(Event.ENTER_FRAME,this.onEnterFrame);
          }
+      }
+
+      private function onPull(param1:GraphEvent) : void {
+         this.graph.pulling = !this.graph.pulling;
+         if (this.graph.pulling) {
+            this.startPeriodicPull();
+         } else {
+            this.stopPeriodicPull();
+         }
+      }
+
+      private function startPeriodicPull():void {
+         trace("startPeriodicPull here")
+         this.jobFetcher.fetchNext(this.handleNextPull, this.handlePullFail);
+         this.intervalId = setTimeout(startPeriodicPull, this.pullingInterval);
+      }
+
+      private function stopPeriodicPull():void {
+         clearTimeout(this.intervalId);
+         trace("PeriodicPull stopped.")
+      }
+
+      private function handleNextPull(job:RemoteJob):void {
+         trace("handleNextPull here")
+         if (job.id > 0 && this.graph.pulling) {
+            this.jobFetcher.fetchDetail(job.id, this.handlePulledData, this.handlePullFail)
+         }
+      }
+
+      private function handlePulledData(job:RemoteJob):void {
+         trace("handlePulledData here")
+         var csv:CSVHelper = new CSVHelper(null, job.data)
+
+         if(this.graph.pulling){
+            if (!this.graph.running) {
+               (this.view as MachinationsEditView).onImportDataDetail(csv);
+            }
+            this.jobFetcher.postSuccess(job.id)
+         }
+      }
+
+      private function handlePullFail(e: Event): void{
+         trace("Pull fail: ", e.toString());
       }
       
       private function onEnterFrame(param1:Event) : void

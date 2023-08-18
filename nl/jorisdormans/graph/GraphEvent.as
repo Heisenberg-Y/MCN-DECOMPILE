@@ -14,7 +14,9 @@ package nl.jorisdormans.graph
       public static const GRAPH_CHANGE:String = "graph_change";
       
       public static const GRAPH_RUN:String = "run";
-      
+
+      public static const GRAPH_PULL:String = "pull";
+
       public static const GRAPH_QUICKRUN:String = "quickrun";
       
       public static const GRAPH_MULTIPLERUN:String = "multiplerun";

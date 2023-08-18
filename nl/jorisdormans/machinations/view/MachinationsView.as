@@ -16,8 +16,10 @@ package nl.jorisdormans.machinations.view
    import nl.jorisdormans.phantomGUI.PhantomLabel;
    import nl.jorisdormans.phantomGUI.PhantomPanel;
    import nl.jorisdormans.phantomGUI.PhantomToolTip;
+   import nl.jorisdormans.utils.CSVHelper;
+   import nl.jorisdormans.utils.CSVItem;
    import nl.jorisdormans.utils.FileIO;
-   
+
    public class MachinationsView extends PhantomBorder
    {
       
@@ -43,7 +45,9 @@ package nl.jorisdormans.machinations.view
       protected var topPanel:PhantomPanel;
       
       public var runButton:PhantomButton;
-      
+
+      public var controlButton: PhantomButton;
+
       public var quickRun:PhantomButton;
       
       public var multipleRuns:PhantomButton;
@@ -55,7 +59,7 @@ package nl.jorisdormans.machinations.view
       protected var _hover:nl.jorisdormans.machinations.view.MachinationsViewElement = null;
       
       protected var fileIO:FileIO;
-      
+
       private var toolTip:PhantomToolTip;
       
       private var popup:nl.jorisdormans.machinations.view.PopUp;
@@ -81,8 +85,10 @@ package nl.jorisdormans.machinations.view
          this.drawPanel.mouseChildren = false;
          this.topBorder = new PhantomBorder(parent,x,y + _controlHeight,_controlWidth,topPanelHeight + 2);
          this.topPanel = new PhantomPanel(this.topBorder,2,0,_controlWidth - 4,topPanelHeight);
-         this.runButton = new PhantomButton("Run (R)1111111",this.run,this.topPanel,4,4,88,24);
+         this.runButton = new PhantomButton("Run (R)",this.run,this.topPanel,4,4,88,24);
          this.runButton.glyph = PhantomGlyph.PLAY;
+         this.controlButton = new PhantomButton("Remote",this.remote_control, this.topPanel,100,4,88,24);
+         this.controlButton.glyph = PhantomGlyph.PLAY;
          this.title = new PhantomLabel("*title",this.topPanel,92,-2,_controlWidth - 100);
          this.data = new PhantomLabel("data",this.topPanel,92,14,_controlWidth - 100);
          this.title.caption = "Loading file...";
@@ -180,6 +186,17 @@ package nl.jorisdormans.machinations.view
          else
          {
             buttonMode = false;
+         }
+      }
+
+      public function importCSV2Elements(csvHelper: CSVHelper): void {
+         var element: MachinationsViewElement = null;
+         var csvItem: CSVItem = null;
+         for each(element in _elements){
+            for each(csvItem in csvHelper.getItems()){
+               trace("============================================");
+               element.importCSVItem(csvItem);
+            }
          }
       }
       
@@ -414,6 +431,15 @@ package nl.jorisdormans.machinations.view
             this.runButton.caption = "Run (R)";
             this.runButton.glyph = PhantomGlyph.PLAY;
             this.setControls(true);
+         }
+      }
+
+      protected function remote_control(param1:PhantomButton): void {
+         dispatchEvent(new GraphEvent(GraphEvent.GRAPH_PULL));
+         if(this.graph.pulling){
+            this.controlButton.caption = "Pulling"
+         } else {
+            this.controlButton.caption = "Remote"
          }
       }
       

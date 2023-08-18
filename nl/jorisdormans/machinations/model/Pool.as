@@ -1,7 +1,8 @@
 package nl.jorisdormans.machinations.model
 {
    import nl.jorisdormans.graph.GraphEvent;
-   
+   import nl.jorisdormans.utils.CSVItem;
+
    public class Pool extends Source
    {
       
@@ -65,6 +66,25 @@ package nl.jorisdormans.machinations.model
          {
             this.displayCapacity = parseInt(param1.@displayCapacity);
          }
+      }
+
+      override public function importCSVItem(csvItem: CSVItem): Boolean{
+         trace("Pool, importCSVItem");
+         if(super.importCSVItem(csvItem)){
+            switch (csvItem.getAttribute()){
+               case CSVItem.CAPACITY:
+                  this.capacity = parseInt(csvItem.getValue());
+                  break;
+               case CSVItem.DISPLAY_CAP:
+                  this.displayCapacity = parseInt(csvItem.getValue());
+                  break;
+               case CSVItem.NUMBER:
+                  this.startingResources = parseInt(csvItem.getValue());
+                  break;
+            }
+            return true;
+         }
+         return false;
       }
       
       public function get startingResources() : int

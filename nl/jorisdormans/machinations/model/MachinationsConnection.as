@@ -4,7 +4,8 @@ package nl.jorisdormans.machinations.model
    import nl.jorisdormans.graph.GraphConnection;
    import nl.jorisdormans.graph.GraphEvent;
    import nl.jorisdormans.phantomGraphics.PhantomFont;
-   import nl.jorisdormans.utils.MathUtil;
+import nl.jorisdormans.utils.CSVItem;
+import nl.jorisdormans.utils.MathUtil;
    import nl.jorisdormans.utils.StringUtil;
    
    public class MachinationsConnection extends GraphConnection
@@ -16,6 +17,8 @@ package nl.jorisdormans.machinations.model
       public var thickness:Number;
       
       public var label:nl.jorisdormans.machinations.model.Label;
+
+      public var captionLabel: String;
       
       public var doEvents:Boolean;
       
@@ -33,6 +36,7 @@ package nl.jorisdormans.machinations.model
          this.thickness = 2;
          this.color = 0;
          this.label = new nl.jorisdormans.machinations.model.Label(this,0.5,"");
+         this.captionLabel = "";
       }
       
       override protected function calculateTotalLength() : void
@@ -149,6 +153,7 @@ package nl.jorisdormans.machinations.model
          _loc1_.@position = Math.round(this.label.position * 100) * 0.01 * this.label.side;
          _loc1_.@color = StringUtil.toColorString(this.color);
          _loc1_.@thickness = this.thickness;
+         _loc1_.@captionLabel = this.captionLabel;
          if(this.label.min > -nl.jorisdormans.machinations.model.Label.LIMIT)
          {
             _loc1_.@min = this.label.min.toFixed(2);
@@ -184,6 +189,29 @@ package nl.jorisdormans.machinations.model
             this.label.max = parseFloat(param1.@max);
          }
          this.thickness = param1.@thickness;
+         this.captionLabel = param1.@captionLabel;
+      }
+
+      override public function importCSVItem(csvItem: CSVItem): Boolean {
+         trace("MachinationsConnection, importCSVItem");
+         if(super.importCSVItem(csvItem)) {
+            if(this.captionLabel != csvItem.getCaption()){
+               return false;
+            }
+            switch (csvItem.getAttribute()){
+               case CSVItem.MIN_VALUE:
+                  this.label.min = parseFloat(csvItem.getValue());
+                  break;
+               case CSVItem.MAX_VALUE:
+                  this.label.max = parseFloat(csvItem.getValue());
+                  break;
+               case CSVItem.LABEL:
+                  this.label.text = csvItem.getValue();
+                  break;
+            }
+            return true;
+         }
+         return false;
       }
       
       public function prepare(param1:Boolean) : void
