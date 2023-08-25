@@ -1,7 +1,8 @@
 package nl.jorisdormans.machinations.model
 {
    import nl.jorisdormans.graph.GraphEvent;
-   
+   import nl.jorisdormans.utils.CSVItem;
+
    public class Gate extends MachinationsNode
    {
       
@@ -54,6 +55,27 @@ package nl.jorisdormans.machinations.model
       {
          super.readXML(param1);
          this.gateType = param1.@gateType;
+      }
+
+      override public function importCSVItem(csvItem: CSVItem): Boolean{
+         if (super.importCSVItem(csvItem)){
+            if (csvItem.getAttribute() === CSVItem.TYPE) {
+               var gateType:String = csvItem.getValue().toLowerCase().split(" ").join("");
+               if (gateType == GATE_DETERMINISTIC) {
+                  this.gateType = GATE_DETERMINISTIC;
+               } else if (gateType == GATE_DICE) {
+                  this.gateType = GATE_DICE;
+               } else if (gateType == GATE_SKILL) {
+                  this.gateType = GATE_SKILL;
+               } else if (gateType == GATE_STRATEGY) {
+                  this.gateType = GATE_STRATEGY;
+               } else if (gateType == GATE_MULTIPLAYER) {
+                  this.gateType = GATE_MULTIPLAYER;
+               }
+            }
+            return true;
+         }
+         return false;
       }
       
       override public function fire() : void

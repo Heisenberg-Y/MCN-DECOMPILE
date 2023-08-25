@@ -6,19 +6,21 @@ public class CSVItem {
     private var value:String
 
     //the item defined in csv
-    public static var PULL_MODE:String = "Pull Mode";
-    public static var ACTION_MODE:String = "Activation";
-    public static var ACTIONS:String = "Actions";
-    public static var THICKNESS:String = "Thickness";
-    public static var SIZE:String = "Size";
-    public static var CAPACITY:String = "Capacity";
-    public static var DISPLAY_CAP:String = "Display Cap.";
-    public static var NUMBER:String = "Number";
-    public static var MIN_VALUE:String = "Min. Value";
-    public static var MAX_VALUE:String = "Max. Value";
-    public static var STARTING_VALUE:String = "Starting Value";
-    public static var STEP:String = "Step";
-    public static var LABEL:String = "Label";
+    public static var COLOR:String = "color";
+    public static var PULL_MODE:String = "pull mode";
+    public static var ACTIVATION_MODE:String = "activation";
+    public static var ACTIONS:String = "actions";
+    public static var THICKNESS:String = "thickness";
+    public static var CAPACITY:String = "capacity";
+    public static var DISPLAY_CAP:String = "display cap.";
+    public static var NUMBER:String = "number";
+    public static var MIN_VALUE:String = "min. value";
+    public static var MAX_VALUE:String = "max. value";
+    public static var STARTING_VALUE:String = "starting value";
+    public static var STEP:String = "step";
+    public static var LABEL:String = "label";
+    public static var RESOURCES:String = "resources";
+    public static var TYPE:String = "type";
 
     public function CSVItem() {
         super();
@@ -47,7 +49,7 @@ public class CSVItem {
     }
 
     public function getAttribute():String {
-        return this.attribute;
+        return this.attribute.toLowerCase().replace(/\s+/g, " ");
     }
 
     public function getValue():String {

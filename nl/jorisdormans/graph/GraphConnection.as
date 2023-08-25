@@ -2,7 +2,6 @@ package nl.jorisdormans.graph
 {
    import flash.geom.Vector3D;
 
-import nl.jorisdormans.machinations.model.MachinationsConnection;
 import nl.jorisdormans.utils.CSVItem;
    import nl.jorisdormans.utils.MathUtil;
    
@@ -94,14 +93,7 @@ import nl.jorisdormans.utils.CSVItem;
       }
 
       override public function importCSVItem(csvItem : CSVItem): Boolean{
-         trace("GraphConnection, importCSVItem");
-         // MachinationsConnection & ResourceConnection & StateConnection
-         if (this is MachinationsConnection) {
-            return true;
-         } else {
-            trace("it's not a MachinationsConnection");
-            return false;
-         }
+         return true;
       }
       
       public function calculateStartPosition(param1:Vector3D = null) : void

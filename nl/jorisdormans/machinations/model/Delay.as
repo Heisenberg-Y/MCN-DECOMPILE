@@ -1,7 +1,8 @@
 package nl.jorisdormans.machinations.model
 {
    import nl.jorisdormans.graph.GraphEvent;
-   
+   import nl.jorisdormans.utils.CSVItem;
+
    public class Delay extends MachinationsNode
    {
       
@@ -46,6 +47,16 @@ package nl.jorisdormans.machinations.model
       {
          super.readXML(param1);
          this.delayType = param1.@delayType;
+      }
+
+      override public function importCSVItem(csvItem: CSVItem): Boolean{
+         if (super.importCSVItem(csvItem)){
+            // TODO
+            // if (csvItem.getAttribute() == CSVItem.RESOURCES) {
+            // }
+            return true;
+         }
+         return false;
       }
       
       override public function prepare(param1:Boolean) : void

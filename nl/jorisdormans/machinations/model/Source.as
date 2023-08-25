@@ -1,6 +1,7 @@
 package nl.jorisdormans.machinations.model
 {
-   import nl.jorisdormans.utils.StringUtil;
+import nl.jorisdormans.utils.CSVItem;
+import nl.jorisdormans.utils.StringUtil;
    
    public class Source extends MachinationsNode
    {
@@ -26,6 +27,16 @@ package nl.jorisdormans.machinations.model
       {
          super.readXML(param1);
          this.resourceColor = StringUtil.toColor(param1.@resourceColor);
+      }
+
+      override public function importCSVItem(csvItem: CSVItem): Boolean{
+         if (super.importCSVItem(csvItem)){
+            if (csvItem.getAttribute() === CSVItem.RESOURCES) {
+               this.resourceColor = StringUtil.toColor(csvItem.getValue());
+            }
+            return true;
+         }
+         return false;
       }
       
       public function get resourceColor() : uint
