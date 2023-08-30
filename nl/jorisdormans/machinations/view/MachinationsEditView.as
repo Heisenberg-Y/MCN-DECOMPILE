@@ -191,7 +191,7 @@ import nl.jorisdormans.utils.FileIO;
          _loc6_ += 24;
          new PhantomButton("Import (I)",this.importGraph,this.panelFile,_loc5_,_loc6_,_loc7_);
          _loc6_ += 24;
-         new PhantomButton("Import Data(D)",this.importData,this.panelFile,_loc5_,_loc6_,_loc7_);
+         new PhantomButton("Import Data (D)",this.importData,this.panelFile,_loc5_,_loc6_,_loc7_);
          _loc6_ += 24;
          new PhantomButton("Save (S)",this.saveGraph,this.panelFile,_loc5_,_loc6_,_loc7_);
          _loc6_ += 24;
