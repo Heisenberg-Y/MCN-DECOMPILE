@@ -62,7 +62,6 @@ package nl.jorisdormans.graph
       }
 
       public function importCSVItem(csvItem: CSVItem): Boolean {
-         trace("GraphElement, importCSVItem");
          return true;
       }
       

@@ -42,7 +42,7 @@ package nl.jorisdormans.machinations.model
             this.advanceTime(1);
          }
       }
-      
+
       override public function readXML(param1:XML) : void
       {
          super.readXML(param1);
@@ -51,9 +51,13 @@ package nl.jorisdormans.machinations.model
 
       override public function importCSVItem(csvItem: CSVItem): Boolean{
          if (super.importCSVItem(csvItem)){
-            // TODO
-            // if (csvItem.getAttribute() == CSVItem.RESOURCES) {
-            // }
+            if (csvItem.getAttribute() == CSVItem.QUEUE) {
+               if (csvItem.getValueBool()) {
+                  this.delayType = TYPE_QUEUE;
+               } else {
+                  this.delayType = TYPE_NORMAL;
+               }
+            }
             return true;
          }
          return false;

@@ -5,6 +5,9 @@ public class CSVItem {
     private var attribute:String;
     private var value:String
 
+    internal const trueValues:Array = ["yes", "1", "true"];
+    internal const falseValues:Array = ["no", "0", "false"];
+
     //the item defined in csv
     public static var COLOR:String = "color";
     public static var PULL_MODE:String = "pull mode";
@@ -21,6 +24,9 @@ public class CSVItem {
     public static var LABEL:String = "label";
     public static var RESOURCES:String = "resources";
     public static var TYPE:String = "type";
+    public static var QUEUE:String = "queue";
+    public static var SCRIPT:String = "script";
+    public static var ACTIONSPERTURN:String = "actions/turn";
 
     public function CSVItem() {
         super();
@@ -54,6 +60,18 @@ public class CSVItem {
 
     public function getValue():String {
         return this.value;
+    }
+
+    public function getValueBool(): Boolean {
+        const lowerValue:String = this.value.toLowerCase();
+
+        if (trueValues.indexOf(lowerValue) !== -1) {
+            return true;
+        } else if (falseValues.indexOf(lowerValue) !== -1) {
+            return false;
+        } else {
+            throw new Error("Invalid boolean representation: " + this.value);
+        }
     }
 
 }

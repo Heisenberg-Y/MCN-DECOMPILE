@@ -142,7 +142,7 @@ import nl.jorisdormans.utils.MathUtil;
          if(!super.importCSVItem(csvItem)){
             return false;
          }
-         if( csvItem.getCaption() == this.caption){
+         if(csvItem.getCaption() == this.caption){
             switch (csvItem.getAttribute()){
                case CSVItem.COLOR:
                   this.color = StringUtil.toColor(csvItem.getValue());
