@@ -503,6 +503,10 @@ import nl.jorisdormans.utils.FileIO;
          {
             this.copySelected(null);
          }
+         if(param1.keyCode == 68)
+         {
+            this.importData(null);
+         }
          if(param1.keyCode == 69)
          {
             this.saveSelection(null);
