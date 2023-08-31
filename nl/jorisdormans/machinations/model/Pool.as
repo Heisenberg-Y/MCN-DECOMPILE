@@ -72,14 +72,14 @@ package nl.jorisdormans.machinations.model
          trace("Pool, importCSVItem");
          if(super.importCSVItem(csvItem)){
             switch (csvItem.getAttribute()){
+               case CSVItem.NUMBER:
+                  this.startingResources = parseInt(csvItem.getValue());
+                  break;
                case CSVItem.CAPACITY:
                   this.capacity = parseInt(csvItem.getValue());
                   break;
                case CSVItem.DISPLAY_CAP:
                   this.displayCapacity = parseInt(csvItem.getValue());
-                  break;
-               case CSVItem.NUMBER:
-                  this.startingResources = parseInt(csvItem.getValue());
                   break;
             }
             return true;

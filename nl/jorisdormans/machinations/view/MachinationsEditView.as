@@ -191,7 +191,7 @@ import nl.jorisdormans.utils.FileIO;
          _loc6_ += 24;
          new PhantomButton("Import (I)",this.importGraph,this.panelFile,_loc5_,_loc6_,_loc7_);
          _loc6_ += 24;
-         new PhantomButton("Import Data(D)",this.importData,this.panelFile,_loc5_,_loc6_,_loc7_);
+         new PhantomButton("Import Data (D)",this.importData,this.panelFile,_loc5_,_loc6_,_loc7_);
          _loc6_ += 24;
          new PhantomButton("Save (S)",this.saveGraph,this.panelFile,_loc5_,_loc6_,_loc7_);
          _loc6_ += 24;
@@ -502,6 +502,10 @@ import nl.jorisdormans.utils.FileIO;
          if(param1.keyCode == 67)
          {
             this.copySelected(null);
+         }
+         if(param1.keyCode == 68)
+         {
+            this.importData(null);
          }
          if(param1.keyCode == 69)
          {

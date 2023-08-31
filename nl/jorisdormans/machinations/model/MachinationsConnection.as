@@ -199,14 +199,20 @@ import nl.jorisdormans.utils.MathUtil;
                return false;
             }
             switch (csvItem.getAttribute()){
+               case CSVItem.COLOR:
+                  this.color = StringUtil.toColor(csvItem.getValue());
+                  break;
+               case CSVItem.THICKNESS:
+                  this.thickness = Number(csvItem.getValue());
+                  break;
+               case CSVItem.LABEL:
+                  this.label.text = csvItem.getValue();
+                  break;
                case CSVItem.MIN_VALUE:
                   this.label.min = parseFloat(csvItem.getValue());
                   break;
                case CSVItem.MAX_VALUE:
                   this.label.max = parseFloat(csvItem.getValue());
-                  break;
-               case CSVItem.LABEL:
-                  this.label.text = csvItem.getValue();
                   break;
             }
             return true;

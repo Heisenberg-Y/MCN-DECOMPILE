@@ -142,38 +142,40 @@ import nl.jorisdormans.utils.MathUtil;
          if(!super.importCSVItem(csvItem)){
             return false;
          }
-         if( csvItem.getCaption() == this.caption){
+         if(csvItem.getCaption() == this.caption){
             switch (csvItem.getAttribute()){
-               case "size":
-                  this.size = Number(csvItem.getValue());
+               case CSVItem.COLOR:
+                  this.color = StringUtil.toColor(csvItem.getValue());
                   break;
                case CSVItem.THICKNESS:
                   this.thickness = Number(csvItem.getValue());
                   break;
-               case CSVItem.PULL_MODE:
-                  if(csvItem.getValue() == "pull any"){
-                     this.pullMode = PULL_MODE_PULL_ANY;
-                  } else if(csvItem.getValue() == "pull all"){
-                     this.pullMode = PULL_MODE_PULL_ALL;
-                  } else if(csvItem.getValue() == "push any"){
-                     this.pullMode = PULL_MODE_PUSH_ANY;
-                  } else if(csvItem.getValue() == "push all"){
-                     this.pullMode = PULL_MODE_PUSH_ALL;
-                  }
-                  break;
-               case CSVItem.ACTION_MODE:
-                  if(csvItem.getValue() == "Passive"){
+               case CSVItem.ACTIVATION_MODE:
+                  var actionMode:String = csvItem.getValue().toLowerCase().split(" ").join("");
+                  if(actionMode == MODE_PASSIVE){
                      this.activationMode = MODE_PASSIVE;
-                  } else if(csvItem.getValue() == "Interactive"){
+                  } else if(actionMode == MODE_INTERACTIVE){
                      this.activationMode = MODE_INTERACTIVE;
-                  } else if(csvItem.getValue() == "Automated"){
+                  } else if(actionMode == MODE_AUTOMATIC){
                      this.activationMode = MODE_AUTOMATIC;
-                  } else if(csvItem.getValue() == "On Start"){
+                  } else if(actionMode == MODE_ONSTART){
                      this.activationMode = MODE_ONSTART;
                   }
                   break;
                case CSVItem.ACTIONS:
                   this.actions = Number(csvItem.getValue());
+                  break;
+               case CSVItem.PULL_MODE:
+                  var pullMode:String = csvItem.getValue().toLowerCase().replace(/\s+/g, " ");
+                  if(pullMode == PULL_MODE_PULL_ANY){
+                     this.pullMode = PULL_MODE_PULL_ANY;
+                  } else if(pullMode == PULL_MODE_PULL_ALL){
+                     this.pullMode = PULL_MODE_PULL_ALL;
+                  } else if(pullMode == PULL_MODE_PUSH_ANY){
+                     this.pullMode = PULL_MODE_PUSH_ANY;
+                  } else if(pullMode == PULL_MODE_PUSH_ALL){
+                     this.pullMode = PULL_MODE_PUSH_ALL;
+                  }
                   break;
             }
             return true;

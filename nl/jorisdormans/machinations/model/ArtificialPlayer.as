@@ -1,7 +1,8 @@
 package nl.jorisdormans.machinations.model
 {
    import nl.jorisdormans.graph.GraphEvent;
-   import nl.jorisdormans.utils.StringUtil;
+import nl.jorisdormans.utils.CSVItem;
+import nl.jorisdormans.utils.StringUtil;
    
    public class ArtificialPlayer extends MachinationsNode
    {
@@ -55,7 +56,26 @@ package nl.jorisdormans.machinations.model
          this.script = param1.toString();
          this.actionsPerTurn = param1.@actionsPerTurn;
       }
-      
+
+      override public function importCSVItem(csvItem:CSVItem): Boolean {
+         if(super.importCSVItem(csvItem)){
+            switch (csvItem.getAttribute()){
+               case CSVItem.SCRIPT:
+                  var splitStrings:Array = csvItem.getValue().split(";");
+                  for (var i:int = 0; i < splitStrings.length; i++) {
+                     splitStrings[i] = StringUtil.trim(splitStrings[i]);
+                  }
+                  this.script = splitStrings.join("\r");
+                  break;
+               case CSVItem.ACTIONSPERTURN:
+                  this.actionsPerTurn = Number(csvItem.getValue());
+                  break;
+            }
+            return true;
+         }
+         return false;
+      }
+
       public function readInstructions() : void
       {
          var _loc3_:String = null;

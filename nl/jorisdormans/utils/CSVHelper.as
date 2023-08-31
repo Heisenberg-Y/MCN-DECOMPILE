@@ -17,7 +17,7 @@ public class CSVHelper {
     }
 
     public function parse():void {
-        var arr:Array = this.data.split("\r\n");
+        var arr:Array = this.data.split(/\r\n|\r|\n/);
         for (var i:uint = 0; i < arr.length; i++) {
             var csvLine:String = arr[i];
             var blocks:Array = csvLine.split(",");

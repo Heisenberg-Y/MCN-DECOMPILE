@@ -1,7 +1,8 @@
 package nl.jorisdormans.machinations.model
 {
    import nl.jorisdormans.graph.GraphEvent;
-   
+   import nl.jorisdormans.utils.CSVItem;
+
    public class Delay extends MachinationsNode
    {
       
@@ -41,11 +42,25 @@ package nl.jorisdormans.machinations.model
             this.advanceTime(1);
          }
       }
-      
+
       override public function readXML(param1:XML) : void
       {
          super.readXML(param1);
          this.delayType = param1.@delayType;
+      }
+
+      override public function importCSVItem(csvItem: CSVItem): Boolean{
+         if (super.importCSVItem(csvItem)){
+            if (csvItem.getAttribute() == CSVItem.QUEUE) {
+               if (csvItem.getValueBool()) {
+                  this.delayType = TYPE_QUEUE;
+               } else {
+                  this.delayType = TYPE_NORMAL;
+               }
+            }
+            return true;
+         }
+         return false;
       }
       
       override public function prepare(param1:Boolean) : void
